@@ -141,3 +141,39 @@ print("Confusion Matrix:")
 print(confusion_matrix)
 cat("Accuracy:", round(accuracy, 4), "\n")
 
+
+# Install and load necessary libraries if not already installed
+if (!require("caret")) {
+  install.packages("caret")
+}
+library(caret)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Define the control parameters for cross-validation
+cv_control <- trainControl(method = "cv", number = 5)  # 5-fold cross-validation
+
+# Specify the models to compare (e.g., Decision Tree, Random Forest, k-Nearest Neighbors)
+models <- list(
+  DecisionTree = train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                       data = iris_data,
+                       method = "rpart",
+                       trControl = cv_control),
+  RandomForest = train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                       data = iris_data,
+                       method = "rf",
+                       trControl = cv_control),
+  kNN = train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+              data = iris_data,
+              method = "knn",
+              trControl = cv_control)
+)
+
+# Compare models using resampling
+results <- resamples(models)
+
+# Summarize and visualize the results
+summary(results)
+bwplot(results)
+
