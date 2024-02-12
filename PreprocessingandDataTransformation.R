@@ -15,3 +15,15 @@ iris_data$species <- factor(iris_data$species, levels = species_levels)
 
 # Display the dataset
 View(iris_data)
+
+# Assuming iris_data is the name of your dataset
+
+# Check for missing values in the entire dataset
+any_missing_values <- any(is.na(iris_data))
+
+# Print the result
+if (any_missing_values) {
+  cat("There are missing values in the Iris dataset.\n")
+} else {
+  cat("There are no missing values in the Iris dataset.\n")
+}
