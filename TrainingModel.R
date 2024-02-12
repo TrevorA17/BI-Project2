@@ -16,7 +16,6 @@ iris_data$species <- factor(iris_data$species, levels = species_levels)
 # Display the dataset
 View(iris_data)
 
-# Assuming iris_data is the name of your dataset
 
 # Install and load necessary libraries if not already installed
 if (!require("caTools")) {
