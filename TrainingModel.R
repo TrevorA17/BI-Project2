@@ -64,3 +64,51 @@ print(boot_results)
 bootstrap_ci <- boot.ci(boot_results, type = "basic")
 print(bootstrap_ci)
 
+# Assuming iris_data is the name of your dataset
+
+# Install and load necessary libraries if not already installed
+if (!require("caret")) {
+  install.packages("caret")
+}
+library(caret)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data into training and testing sets (you can adjust this based on your preference)
+split <- createDataPartition(iris_data$species, p = 0.8, list = FALSE)
+train_data <- iris_data[split, ]
+test_data <- iris_data[-split, ]
+
+# Define the control parameters for cross-validation
+cv_control <- trainControl(method = "cv", number = 5)  # Basic cross-validation with 5 folds
+
+# Train a classification model (e.g., Decision Tree) using basic cross-validation
+model_basic_cv <- train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                        data = train_data,
+                        method = "rpart",
+                        trControl = cv_control)
+
+# Display the results
+print(model_basic_cv)
+
+# Repeated Cross-Validation
+cv_control_repeated <- trainControl(method = "repeatedcv", number = 5, repeats = 3)  # Repeated cross-validation with 5 folds and 3 repeats
+
+model_repeated_cv <- train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                           data = train_data,
+                           method = "rpart",
+                           trControl = cv_control_repeated)
+
+print(model_repeated_cv)
+
+# Leave-One-Out Cross-Validation (LOOCV)
+cv_control_loocv <- trainControl(method = "LOOCV")  # Leave-One-Out Cross-Validation
+
+model_loocv <- train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                     data = train_data,
+                     method = "rpart",
+                     trControl = cv_control_loocv)
+
+print(model_loocv)
+
