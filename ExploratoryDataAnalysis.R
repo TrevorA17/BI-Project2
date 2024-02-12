@@ -171,4 +171,13 @@ ggplot(iris_data, aes(x = petal_width)) +
   labs(title = "Histogram of Petal Width", x = "Petal Width", y = "Frequency") +
   theme_minimal()
 
+# Scatterplot matrix
+scatter_matrix <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot Matrix", color = "Species") +
+  theme_minimal()
+
+print(scatter_matrix)
+
+
 
