@@ -62,4 +62,45 @@ cat(paste0("Median: ", median_petal_width), "\n")
 cat(paste0("Mode: ", mode_petal_width), "\n\n")
 
 
+# Calculate range, variance, and standard deviation for sepal_length
+range_sepal_length <- range(iris_data$sepal_length)
+variance_sepal_length <- var(iris_data$sepal_length)
+sd_sepal_length <- sd(iris_data$sepal_length)
+
+cat("Measures of Distribution for sepal_length:\n")
+cat(paste0("Range: ", paste(range_sepal_length, collapse = " - ")), "\n")
+cat(paste0("Variance: ", round(variance_sepal_length, 2)), "\n")
+cat(paste0("Standard Deviation: ", round(sd_sepal_length, 2)), "\n\n")
+
+# Calculate range, variance, and standard deviation for sepal_width
+range_sepal_width <- range(iris_data$sepal_width)
+variance_sepal_width <- var(iris_data$sepal_width)
+sd_sepal_width <- sd(iris_data$sepal_width)
+
+cat("Measures of Distribution for sepal_width:\n")
+cat(paste0("Range: ", paste(range_sepal_width, collapse = " - ")), "\n")
+cat(paste0("Variance: ", round(variance_sepal_width, 2)), "\n")
+cat(paste0("Standard Deviation: ", round(sd_sepal_width, 2)), "\n\n")
+
+# Calculate range, variance, and standard deviation for petal_length
+range_petal_length <- range(iris_data$petal_length)
+variance_petal_length <- var(iris_data$petal_length)
+sd_petal_length <- sd(iris_data$petal_length)
+
+cat("Measures of Distribution for petal_length:\n")
+cat(paste0("Range: ", paste(range_petal_length, collapse = " - ")), "\n")
+cat(paste0("Variance: ", round(variance_petal_length, 2)), "\n")
+cat(paste0("Standard Deviation: ", round(sd_petal_length, 2)), "\n\n")
+
+# Calculate range, variance, and standard deviation for petal_width
+range_petal_width <- range(iris_data$petal_width)
+variance_petal_width <- var(iris_data$petal_width)
+sd_petal_width <- sd(iris_data$petal_width)
+
+cat("Measures of Distribution for petal_width:\n")
+cat(paste0("Range: ", paste(range_petal_width, collapse = " - ")), "\n")
+cat(paste0("Variance: ", round(variance_petal_width, 2)), "\n")
+cat(paste0("Standard Deviation: ", round(sd_petal_width, 2)), "\n\n")
+
+
 
