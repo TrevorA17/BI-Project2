@@ -135,3 +135,40 @@ summary(anova_petal_length)
 # Perform ANOVA for petal_width by species
 anova_petal_width <- aov(petal_width ~ species, data = iris_data)
 summary(anova_petal_width)
+
+# Install and load the necessary library if not already installed
+if (!require("ggplot2")) {
+  install.packages("ggplot2")
+}
+library(ggplot2)
+
+# Assuming iris_data is the name of your dataset
+
+# Install and load the necessary library if not already installed
+if (!require("ggplot2")) {
+  install.packages("ggplot2")
+}
+library(ggplot2)
+
+# Create univariate plots for sepal_length, sepal_width, petal_length, and petal_width
+ggplot(iris_data, aes(x = sepal_length)) +
+  geom_histogram(binwidth = 0.1, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Sepal Length", x = "Sepal Length", y = "Frequency") +
+  theme_minimal()
+
+ggplot(iris_data, aes(x = sepal_width)) +
+  geom_histogram(binwidth = 0.1, fill = "green", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Sepal Width", x = "Sepal Width", y = "Frequency") +
+  theme_minimal()
+
+ggplot(iris_data, aes(x = petal_length)) +
+  geom_histogram(binwidth = 0.1, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Petal Length", x = "Petal Length", y = "Frequency") +
+  theme_minimal()
+
+ggplot(iris_data, aes(x = petal_width)) +
+  geom_histogram(binwidth = 0.1, fill = "red", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Petal Width", x = "Petal Width", y = "Frequency") +
+  theme_minimal()
+
+
