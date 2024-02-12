@@ -179,5 +179,22 @@ scatter_matrix <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, color
 
 print(scatter_matrix)
 
+# Pairwise Scatterplot with Species color differentiation
+pairwise_scatterplot <- ggplot(iris_data, aes(color = species)) +
+  geom_point(aes(x = sepal_length, y = sepal_width)) +
+  geom_point(aes(x = petal_length, y = petal_width)) +
+  geom_point(aes(x = sepal_length, y = petal_length)) +
+  geom_point(aes(x = sepal_width, y = petal_width)) +
+  labs(title = "Pairwise Scatterplot with Species Color Differentiation") +
+  theme_minimal()
 
+print(pairwise_scatterplot)
 
+# 3D Scatterplot
+three_d_scatterplot <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, z = petal_length, color = species)) +
+  geom_point() +
+  labs(title = "3D Scatterplot with Species Color Differentiation") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(three_d_scatterplot)
