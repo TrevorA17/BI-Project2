@@ -16,7 +16,10 @@ iris_data$species <- factor(iris_data$species, levels = species_levels)
 # Display the dataset
 View(iris_data)
 
-# Assuming iris_data is the name of your dataset
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
 
 # Calculate measures of central tendency for sepal_length
 mean_sepal_length <- mean(iris_data$sepal_length)
