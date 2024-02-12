@@ -120,5 +120,18 @@ cat("Correlation Coefficients for All Numerical Columns:\n")
 print(cor_all)
 cat("\n")
 
+# Perform ANOVA for sepal_length by species
+anova_sepal_length <- aov(sepal_length ~ species, data = iris_data)
+summary(anova_sepal_length)
 
+# Perform ANOVA for sepal_width by species
+anova_sepal_width <- aov(sepal_width ~ species, data = iris_data)
+summary(anova_sepal_width)
 
+# Perform ANOVA for petal_length by species
+anova_petal_length <- aov(petal_length ~ species, data = iris_data)
+summary(anova_petal_length)
+
+# Perform ANOVA for petal_width by species
+anova_petal_width <- aov(petal_width ~ species, data = iris_data)
+summary(anova_petal_width)
