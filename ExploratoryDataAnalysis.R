@@ -102,7 +102,6 @@ cat(paste0("Range: ", paste(range_petal_width, collapse = " - ")), "\n")
 cat(paste0("Variance: ", round(variance_petal_width, 2)), "\n")
 cat(paste0("Standard Deviation: ", round(sd_petal_width, 2)), "\n\n")
 
-# Assuming iris_data is the name of your dataset
 
 # Calculate correlation coefficients for numerical columns
 cor_sepal <- cor(iris_data[, c("sepal_length", "sepal_width")])
