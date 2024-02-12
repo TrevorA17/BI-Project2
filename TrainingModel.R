@@ -127,10 +127,10 @@ train_data <- iris_data[split, ]
 test_data <- iris_data[-split, ]
 
 # Train a Decision Tree classification model
-model <- rpart(species ~ sepal_length + sepal_width + petal_length + petal_width, data = train_data, method = "class")
+dt_model <- rpart(species ~ sepal_length + sepal_width + petal_length + petal_width, data = train_data, method = "class")
 
 # Make predictions on the test set
-predictions <- predict(model, newdata = test_data, type = "class")
+predictions <- predict(dt_model, newdata = test_data, type = "class")
 
 # Evaluate the model
 confusion_matrix <- table(predictions, test_data$species)
