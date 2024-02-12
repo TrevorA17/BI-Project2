@@ -111,3 +111,33 @@ model_loocv <- train(species ~ sepal_length + sepal_width + petal_length + petal
 
 print(model_loocv)
 
+
+# Install and load necessary libraries if not already installed
+if (!require("rpart")) {
+  install.packages("rpart")
+}
+library(rpart)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data into training and testing sets (you can adjust this based on your preference)
+split <- createDataPartition(iris_data$species, p = 0.8, list = FALSE)
+train_data <- iris_data[split, ]
+test_data <- iris_data[-split, ]
+
+# Train a Decision Tree classification model
+model <- rpart(species ~ sepal_length + sepal_width + petal_length + petal_width, data = train_data, method = "class")
+
+# Make predictions on the test set
+predictions <- predict(model, newdata = test_data, type = "class")
+
+# Evaluate the model
+confusion_matrix <- table(predictions, test_data$species)
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+
+# Display the confusion matrix and accuracy
+print("Confusion Matrix:")
+print(confusion_matrix)
+cat("Accuracy:", round(accuracy, 4), "\n")
+
