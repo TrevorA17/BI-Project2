@@ -491,3 +491,40 @@ print(three_d_scatterplot)
 ```
 
 ![](IrisFlowerClassification_files/figure-gfm/Multivariate%20plots-3.png)<!-- -->
+
+``` r
+# Check for missing values in the entire dataset
+any_missing_values <- any(is.na(iris_data))
+
+# Print the result
+if (any_missing_values) {
+  cat("There are missing values in the Iris dataset.\n")
+} else {
+  cat("There are no missing values in the Iris dataset.\n")
+}
+```
+
+    ## There are no missing values in the Iris dataset.
+
+``` r
+library(caTools)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data into training and testing sets
+split <- sample.split(iris_data$species, SplitRatio = 0.8)
+train_data <- subset(iris_data, split == TRUE)
+test_data <- subset(iris_data, split == FALSE)
+
+# Display the number of observations in each set
+cat("Number of observations in the training set:", nrow(train_data), "\n")
+```
+
+    ## Number of observations in the training set: 120
+
+``` r
+cat("Number of observations in the testing set:", nrow(test_data), "\n")
+```
+
+    ## Number of observations in the testing set: 30
