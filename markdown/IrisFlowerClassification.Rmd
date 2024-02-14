@@ -1,7 +1,7 @@
 ---
-title: "Business Intelligence Project"
-author: "134780 Trevor Okinda"
-date: "27th November 2023"
+title: "Iris Flower Classification Model"
+author: "Trevor Okinda"
+date: ""
 output:
   github_document: 
     toc: yes
@@ -20,7 +20,7 @@ editor_options:
 | **Student ID Number**                        | 134780 |
 | **Student Name**                             | Trevor Okinda |
 | **BBIT 4.2 Group**                           | C |
-| **Project Name**                             | A Rainfall prediction model |
+| **Project Name**                             | A Flower Classification Model |
 
 # Setup Chunk
 
