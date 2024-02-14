@@ -35,3 +35,4 @@ print(content_json)
 # Parse the JSON response into a data frame or list
 parsed_result <- fromJSON(content_json)
 print(parsed_result)
+
