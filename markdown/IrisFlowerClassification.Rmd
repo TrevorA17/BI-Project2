@@ -159,3 +159,96 @@ cat(paste0("Variance: ", round(variance_petal_width, 2)), "\n")
 cat(paste0("Standard Deviation: ", round(sd_petal_width, 2)), "\n\n")
 ```
 
+```{r Measures of Relationship}
+# Calculate correlation coefficients for numerical columns
+cor_sepal <- cor(iris_data[, c("sepal_length", "sepal_width")])
+cor_petal <- cor(iris_data[, c("petal_length", "petal_width")])
+cor_all <- cor(iris_data[, c("sepal_length", "sepal_width", "petal_length", "petal_width")])
+
+cat("Correlation Coefficients for Sepal Length and Sepal Width:\n")
+print(cor_sepal)
+cat("\n")
+
+cat("Correlation Coefficients for Petal Length and Petal Width:\n")
+print(cor_petal)
+cat("\n")
+
+cat("Correlation Coefficients for All Numerical Columns:\n")
+print(cor_all)
+cat("\n")
+```
+
+```{r ANOVA}
+# Perform ANOVA for sepal_length by species
+anova_sepal_length <- aov(sepal_length ~ species, data = iris_data)
+summary(anova_sepal_length)
+
+# Perform ANOVA for sepal_width by species
+anova_sepal_width <- aov(sepal_width ~ species, data = iris_data)
+summary(anova_sepal_width)
+
+# Perform ANOVA for petal_length by species
+anova_petal_length <- aov(petal_length ~ species, data = iris_data)
+summary(anova_petal_length)
+
+# Perform ANOVA for petal_width by species
+anova_petal_width <- aov(petal_width ~ species, data = iris_data)
+summary(anova_petal_width)
+```
+
+```{r Univariate Plots}
+library(ggplot2)
+
+# Create univariate plots for sepal_length, sepal_width, petal_length, and petal_width
+ggplot(iris_data, aes(x = sepal_length)) +
+  geom_histogram(binwidth = 0.1, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Sepal Length", x = "Sepal Length", y = "Frequency") +
+  theme_minimal()
+
+ggplot(iris_data, aes(x = sepal_width)) +
+  geom_histogram(binwidth = 0.1, fill = "green", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Sepal Width", x = "Sepal Width", y = "Frequency") +
+  theme_minimal()
+
+ggplot(iris_data, aes(x = petal_length)) +
+  geom_histogram(binwidth = 0.1, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Petal Length", x = "Petal Length", y = "Frequency") +
+  theme_minimal()
+
+ggplot(iris_data, aes(x = petal_width)) +
+  geom_histogram(binwidth = 0.1, fill = "red", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Petal Width", x = "Petal Width", y = "Frequency") +
+  theme_minimal()
+```
+
+```{r Multivariate plots}
+# Scatterplot matrix
+scatter_matrix <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot Matrix", color = "Species") +
+  theme_minimal()
+
+print(scatter_matrix)
+
+# Pairwise Scatterplot with Species color differentiation
+pairwise_scatterplot <- ggplot(iris_data, aes(color = species)) +
+  geom_point(aes(x = sepal_length, y = sepal_width)) +
+  geom_point(aes(x = petal_length, y = petal_width)) +
+  geom_point(aes(x = sepal_length, y = petal_length)) +
+  geom_point(aes(x = sepal_width, y = petal_width)) +
+  labs(title = "Pairwise Scatterplot with Species Color Differentiation") +
+  theme_minimal()
+
+print(pairwise_scatterplot)
+
+# 3D Scatterplot
+three_d_scatterplot <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, z = petal_length, color = species)) +
+  geom_point() +
+  labs(title = "3D Scatterplot with Species Color Differentiation") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(three_d_scatterplot)
+
+```
+

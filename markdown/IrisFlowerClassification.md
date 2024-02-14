@@ -303,3 +303,191 @@ cat(paste0("Standard Deviation: ", round(sd_petal_width, 2)), "\n\n")
 ```
 
     ## Standard Deviation: 0.76
+
+``` r
+# Calculate correlation coefficients for numerical columns
+cor_sepal <- cor(iris_data[, c("sepal_length", "sepal_width")])
+cor_petal <- cor(iris_data[, c("petal_length", "petal_width")])
+cor_all <- cor(iris_data[, c("sepal_length", "sepal_width", "petal_length", "petal_width")])
+
+cat("Correlation Coefficients for Sepal Length and Sepal Width:\n")
+```
+
+    ## Correlation Coefficients for Sepal Length and Sepal Width:
+
+``` r
+print(cor_sepal)
+```
+
+    ##              sepal_length sepal_width
+    ## sepal_length    1.0000000  -0.1093692
+    ## sepal_width    -0.1093692   1.0000000
+
+``` r
+cat("\n")
+```
+
+``` r
+cat("Correlation Coefficients for Petal Length and Petal Width:\n")
+```
+
+    ## Correlation Coefficients for Petal Length and Petal Width:
+
+``` r
+print(cor_petal)
+```
+
+    ##              petal_length petal_width
+    ## petal_length    1.0000000   0.9627571
+    ## petal_width     0.9627571   1.0000000
+
+``` r
+cat("\n")
+```
+
+``` r
+cat("Correlation Coefficients for All Numerical Columns:\n")
+```
+
+    ## Correlation Coefficients for All Numerical Columns:
+
+``` r
+print(cor_all)
+```
+
+    ##              sepal_length sepal_width petal_length petal_width
+    ## sepal_length    1.0000000  -0.1093692    0.8717542   0.8179536
+    ## sepal_width    -0.1093692   1.0000000   -0.4205161  -0.3565441
+    ## petal_length    0.8717542  -0.4205161    1.0000000   0.9627571
+    ## petal_width     0.8179536  -0.3565441    0.9627571   1.0000000
+
+``` r
+cat("\n")
+```
+
+``` r
+# Perform ANOVA for sepal_length by species
+anova_sepal_length <- aov(sepal_length ~ species, data = iris_data)
+summary(anova_sepal_length)
+```
+
+    ##              Df Sum Sq Mean Sq F value Pr(>F)    
+    ## species       2  63.21  31.606   119.3 <2e-16 ***
+    ## Residuals   147  38.96   0.265                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+# Perform ANOVA for sepal_width by species
+anova_sepal_width <- aov(sepal_width ~ species, data = iris_data)
+summary(anova_sepal_width)
+```
+
+    ##              Df Sum Sq Mean Sq F value Pr(>F)    
+    ## species       2  10.98   5.489   47.36 <2e-16 ***
+    ## Residuals   147  17.04   0.116                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+# Perform ANOVA for petal_length by species
+anova_petal_length <- aov(petal_length ~ species, data = iris_data)
+summary(anova_petal_length)
+```
+
+    ##              Df Sum Sq Mean Sq F value Pr(>F)    
+    ## species       2  436.6  218.32    1179 <2e-16 ***
+    ## Residuals   147   27.2    0.19                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+# Perform ANOVA for petal_width by species
+anova_petal_width <- aov(petal_width ~ species, data = iris_data)
+summary(anova_petal_width)
+```
+
+    ##              Df Sum Sq Mean Sq F value Pr(>F)    
+    ## species       2  80.60   40.30   959.3 <2e-16 ***
+    ## Residuals   147   6.18    0.04                   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+library(ggplot2)
+
+# Create univariate plots for sepal_length, sepal_width, petal_length, and petal_width
+ggplot(iris_data, aes(x = sepal_length)) +
+  geom_histogram(binwidth = 0.1, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Sepal Length", x = "Sepal Length", y = "Frequency") +
+  theme_minimal()
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Univariate%20Plots-1.png)<!-- -->
+
+``` r
+ggplot(iris_data, aes(x = sepal_width)) +
+  geom_histogram(binwidth = 0.1, fill = "green", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Sepal Width", x = "Sepal Width", y = "Frequency") +
+  theme_minimal()
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Univariate%20Plots-2.png)<!-- -->
+
+``` r
+ggplot(iris_data, aes(x = petal_length)) +
+  geom_histogram(binwidth = 0.1, fill = "orange", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Petal Length", x = "Petal Length", y = "Frequency") +
+  theme_minimal()
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Univariate%20Plots-3.png)<!-- -->
+
+``` r
+ggplot(iris_data, aes(x = petal_width)) +
+  geom_histogram(binwidth = 0.1, fill = "red", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Petal Width", x = "Petal Width", y = "Frequency") +
+  theme_minimal()
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Univariate%20Plots-4.png)<!-- -->
+
+``` r
+# Scatterplot matrix
+scatter_matrix <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot Matrix", color = "Species") +
+  theme_minimal()
+
+print(scatter_matrix)
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Multivariate%20plots-1.png)<!-- -->
+
+``` r
+# Pairwise Scatterplot with Species color differentiation
+pairwise_scatterplot <- ggplot(iris_data, aes(color = species)) +
+  geom_point(aes(x = sepal_length, y = sepal_width)) +
+  geom_point(aes(x = petal_length, y = petal_width)) +
+  geom_point(aes(x = sepal_length, y = petal_length)) +
+  geom_point(aes(x = sepal_width, y = petal_width)) +
+  labs(title = "Pairwise Scatterplot with Species Color Differentiation") +
+  theme_minimal()
+
+print(pairwise_scatterplot)
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Multivariate%20plots-2.png)<!-- -->
+
+``` r
+# 3D Scatterplot
+three_d_scatterplot <- ggplot(iris_data, aes(x = sepal_length, y = sepal_width, z = petal_length, color = species)) +
+  geom_point() +
+  labs(title = "3D Scatterplot with Species Color Differentiation") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(three_d_scatterplot)
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Multivariate%20plots-3.png)<!-- -->
