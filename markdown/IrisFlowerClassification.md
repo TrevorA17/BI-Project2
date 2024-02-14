@@ -761,3 +761,73 @@ bwplot(results)
 ```
 
 ![](IrisFlowerClassification_files/figure-gfm/Training%20with%20resamples%20and%20model%20performance%20evaluation-1.png)<!-- -->
+
+``` r
+# Train Decision Tree Model
+dt_model <- train(
+  species ~ .,
+  data = iris_data,
+  method = "rpart",
+  trControl = trainControl(method = "cv", number = 5)
+)
+
+# Save the Decision Tree model
+saveRDS(dt_model, "./models/saved_dt_model.rds")
+
+# Load the saved Decision Tree model
+loaded_dt_model <- readRDS("./models/saved_dt_model.rds")
+
+# Arrange variables in the desired order for prediction
+new_data <- data.frame(
+  sepal_length = 5.0,
+  sepal_width = 3.0,
+  petal_length = 1.5,
+  petal_width = 0.2
+)
+
+# Use the loaded Decision Tree model to make predictions
+predictions_loaded_dt_model <- predict(loaded_dt_model, newdata = new_data)
+
+# Print predictions
+print(predictions_loaded_dt_model)
+```
+
+    ## [1] Iris-setosa
+    ## Levels: Iris-setosa Iris-versicolor Iris-virginica
+
+``` r
+# Load required libraries
+library(plumber)
+library(rpart)
+
+# Load the saved Decision Tree model
+loaded_dt_model <- readRDS("./models/saved_dt_model.rds")
+
+# Define the Plumber API
+#* @apiTitle Iris Species Prediction Model API
+#* @apiDescription Used to predict the species of iris flowers based on features like sepal length, sepal width, petal length, and petal width.
+
+#* @param sepal_length Sepal length of the iris flower
+#* @param sepal_width Sepal width of the iris flower
+#* @param petal_length Petal length of the iris flower
+#* @param petal_width Petal width of the iris flower
+
+#* @get /iris_species
+
+predict_iris_species <- function(sepal_length, sepal_width, petal_length, petal_width) {
+  
+  # Create a data frame using the arguments
+  to_be_predicted <- data.frame(
+    sepal_length = as.numeric(sepal_length),
+    sepal_width = as.numeric(sepal_width),
+    petal_length = as.numeric(petal_length),
+    petal_width = as.numeric(petal_width)
+  )
+  
+  # Use the loaded model to make predictions
+  prediction <- predict(loaded_dt_model, newdata = to_be_predicted)
+  
+  # Return the prediction
+  return(prediction)
+}
+```
