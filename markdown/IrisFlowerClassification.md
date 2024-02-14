@@ -552,3 +552,212 @@ print(boot_results)
 bootstrap_ci <- boot.ci(boot_results, type = "basic")
 print(bootstrap_ci)
 ```
+
+``` r
+library(caret)
+```
+
+    ## Loading required package: lattice
+
+``` r
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data into training and testing sets (you can adjust this based on your preference)
+split <- createDataPartition(iris_data$species, p = 0.8, list = FALSE)
+train_data <- iris_data[split, ]
+test_data <- iris_data[-split, ]
+
+# Define the control parameters for cross-validation
+cv_control <- trainControl(method = "cv", number = 5)  # Basic cross-validation with 5 folds
+
+# Train a classification model (e.g., Decision Tree) using basic cross-validation
+model_basic_cv <- train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                        data = train_data,
+                        method = "rpart",
+                        trControl = cv_control)
+
+# Display the results
+print(model_basic_cv)
+```
+
+    ## CART 
+    ## 
+    ## 120 samples
+    ##   4 predictor
+    ##   3 classes: 'Iris-setosa', 'Iris-versicolor', 'Iris-virginica' 
+    ## 
+    ## No pre-processing
+    ## Resampling: Cross-Validated (5 fold) 
+    ## Summary of sample sizes: 96, 96, 96, 96, 96 
+    ## Resampling results across tuning parameters:
+    ## 
+    ##   cp    Accuracy   Kappa 
+    ##   0.00  0.9416667  0.9125
+    ##   0.45  0.8250000  0.7375
+    ##   0.50  0.3333333  0.0000
+    ## 
+    ## Accuracy was used to select the optimal model using the largest value.
+    ## The final value used for the model was cp = 0.
+
+``` r
+# Repeated Cross-Validation
+cv_control_repeated <- trainControl(method = "repeatedcv", number = 5, repeats = 3)  # Repeated cross-validation with 5 folds and 3 repeats
+
+model_repeated_cv <- train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                           data = train_data,
+                           method = "rpart",
+                           trControl = cv_control_repeated)
+
+print(model_repeated_cv)
+```
+
+    ## CART 
+    ## 
+    ## 120 samples
+    ##   4 predictor
+    ##   3 classes: 'Iris-setosa', 'Iris-versicolor', 'Iris-virginica' 
+    ## 
+    ## No pre-processing
+    ## Resampling: Cross-Validated (5 fold, repeated 3 times) 
+    ## Summary of sample sizes: 96, 96, 96, 96, 96, 96, ... 
+    ## Resampling results across tuning parameters:
+    ## 
+    ##   cp    Accuracy   Kappa    
+    ##   0.00  0.9388889  0.9083333
+    ##   0.45  0.8777778  0.8166667
+    ##   0.50  0.3333333  0.0000000
+    ## 
+    ## Accuracy was used to select the optimal model using the largest value.
+    ## The final value used for the model was cp = 0.
+
+``` r
+# Leave-One-Out Cross-Validation (LOOCV)
+cv_control_loocv <- trainControl(method = "LOOCV")  # Leave-One-Out Cross-Validation
+
+model_loocv <- train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                     data = train_data,
+                     method = "rpart",
+                     trControl = cv_control_loocv)
+
+print(model_loocv)
+```
+
+    ## CART 
+    ## 
+    ## 120 samples
+    ##   4 predictor
+    ##   3 classes: 'Iris-setosa', 'Iris-versicolor', 'Iris-virginica' 
+    ## 
+    ## No pre-processing
+    ## Resampling: Leave-One-Out Cross-Validation 
+    ## Summary of sample sizes: 119, 119, 119, 119, 119, 119, ... 
+    ## Resampling results across tuning parameters:
+    ## 
+    ##   cp    Accuracy   Kappa 
+    ##   0.00  0.9500000   0.925
+    ##   0.45  0.3333333   0.000
+    ##   0.50  0.0000000  -0.500
+    ## 
+    ## Accuracy was used to select the optimal model using the largest value.
+    ## The final value used for the model was cp = 0.
+
+``` r
+library(rpart)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data into training and testing sets (you can adjust this based on your preference)
+split <- createDataPartition(iris_data$species, p = 0.8, list = FALSE)
+train_data <- iris_data[split, ]
+test_data <- iris_data[-split, ]
+
+# Train a Decision Tree classification model
+dt_model <- rpart(species ~ sepal_length + sepal_width + petal_length + petal_width, data = train_data, method = "class")
+
+# Make predictions on the test set
+predictions <- predict(dt_model, newdata = test_data, type = "class")
+
+# Evaluate the model
+confusion_matrix <- table(predictions, test_data$species)
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+
+# Display the confusion matrix and accuracy
+print("Confusion Matrix:")
+```
+
+    ## [1] "Confusion Matrix:"
+
+``` r
+print(confusion_matrix)
+```
+
+    ##                  
+    ## predictions       Iris-setosa Iris-versicolor Iris-virginica
+    ##   Iris-setosa              10               0              0
+    ##   Iris-versicolor           0              10              2
+    ##   Iris-virginica            0               0              8
+
+``` r
+cat("Accuracy:", round(accuracy, 4), "\n")
+```
+
+    ## Accuracy: 0.9333
+
+``` r
+library(caret)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Define the control parameters for cross-validation
+cv_control <- trainControl(method = "cv", number = 5)  # 5-fold cross-validation
+
+# Specify the models to compare (e.g., Decision Tree, Random Forest, k-Nearest Neighbors)
+models <- list(
+  DecisionTree = train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                       data = iris_data,
+                       method = "rpart",
+                       trControl = cv_control),
+  RandomForest = train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+                       data = iris_data,
+                       method = "rf",
+                       trControl = cv_control),
+  kNN = train(species ~ sepal_length + sepal_width + petal_length + petal_width,
+              data = iris_data,
+              method = "knn",
+              trControl = cv_control)
+)
+
+# Compare models using resampling
+results <- resamples(models)
+
+# Summarize and visualize the results
+summary(results)
+```
+
+    ## 
+    ## Call:
+    ## summary.resamples(object = results)
+    ## 
+    ## Models: DecisionTree, RandomForest, kNN 
+    ## Number of resamples: 5 
+    ## 
+    ## Accuracy 
+    ##                   Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA's
+    ## DecisionTree 0.9333333 0.9333333 0.9333333 0.9533333 0.9666667 1.0000000    0
+    ## RandomForest 0.9333333 0.9666667 0.9666667 0.9600000 0.9666667 0.9666667    0
+    ## kNN          0.9000000 0.9666667 0.9666667 0.9666667 1.0000000 1.0000000    0
+    ## 
+    ## Kappa 
+    ##              Min. 1st Qu. Median Mean 3rd Qu. Max. NA's
+    ## DecisionTree 0.90    0.90   0.90 0.93    0.95 1.00    0
+    ## RandomForest 0.90    0.95   0.95 0.94    0.95 0.95    0
+    ## kNN          0.85    0.95   0.95 0.95    1.00 1.00    0
+
+``` r
+bwplot(results)
+```
+
+![](IrisFlowerClassification_files/figure-gfm/Training%20with%20resamples%20and%20model%20performance%20evaluation-1.png)<!-- -->
