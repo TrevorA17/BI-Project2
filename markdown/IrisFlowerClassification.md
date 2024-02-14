@@ -528,3 +528,27 @@ cat("Number of observations in the testing set:", nrow(test_data), "\n")
 ```
 
     ## Number of observations in the testing set: 30
+
+``` boostrapping
+library(boot)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Define a function to calculate the statistic of interest
+calculate_statistic <- function(data, indices) {
+  sample_data <- data[indices, ]
+  mean_sepal_length <- mean(sample_data$sepal_length)
+  return(mean_sepal_length)
+}
+
+# Perform bootstrap resampling
+boot_results <- boot(data = iris_data, statistic = calculate_statistic, R = 1000)
+
+# Display the bootstrap results
+print(boot_results)
+
+# Calculate the bootstrap confidence interval
+bootstrap_ci <- boot.ci(boot_results, type = "basic")
+print(bootstrap_ci)
+```
